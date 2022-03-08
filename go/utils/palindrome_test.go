@@ -30,6 +30,6 @@ func TestIsIntPalindrome(t *testing.T) {
 
 func BenchmarkIsIntPalindrome(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		IsIntPalindrome(123454321)
+		IsIntPalindrome(123456789987654321)
 	}
 }
