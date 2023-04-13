@@ -19,9 +19,11 @@ func TestIsPrime(t *testing.T) {
 		{4, false, nil},
 		{5, true, nil},
 		{7, true, nil},
+		{9, false, nil},
 		{41, true, nil},
 		{97, true, nil},
 		{99, false, nil},
+		{123456789987654321, false, nil},
 	}
 
 	for _, test := range tests {
@@ -56,6 +58,78 @@ func TestNextPrime(t *testing.T) {
 
 		if got != test.want {
 			t.Errorf("want=%v got=%v", test.want, got)
+		}
+	}
+}
+
+func TestPlusOne(t *testing.T) {
+	if got := findDiagonalOrder([][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}); !reflect.DeepEqual(got, []int{1, 2, 4, 7, 5, 3, 6, 8, 9}) {
+		t.Errorf("want=%v got=%v", []int{1, 2, 4, 7, 5, 3, 6, 8, 9}, got)
+	}
+}
+
+func TestPlusOne1(t *testing.T) {
+	if got := findDiagonalOrder([][]int{{1, 2}, {3, 4}}); !reflect.DeepEqual(got, []int{1, 2, 3, 4}) {
+		t.Errorf("want=%v got=%v", []int{1, 2, 3, 4}, got)
+	}
+}
+
+func BenchmarkPlusOne(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		findDiagonalOrder([][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}})
+	}
+}
+
+func TestCoordinatesClosure(t *testing.T) {
+	f := coordinatesClosure(3)
+
+	tests := []struct {
+		row int
+		col int
+	}{
+		{
+			row: 0,
+			col: 0,
+		},
+		{
+			row: 0,
+			col: 1,
+		},
+		{
+			row: 1,
+			col: 0,
+		},
+		{
+			row: 2,
+			col: 0,
+		},
+		{
+			row: 1,
+			col: 1,
+		},
+		{
+			row: 0,
+			col: 2,
+		},
+		{
+			row: 1,
+			col: 2,
+		},
+		{
+			row: 2,
+			col: 1,
+		},
+		{
+			row: 2,
+			col: 2,
+		},
+	}
+
+	for _, test := range tests {
+		row, col := f()
+
+		if row != test.row || col != test.col {
+			t.Errorf("(%d, %d) != (%d, %d)", row, col, test.row, test.col)
 		}
 	}
 }

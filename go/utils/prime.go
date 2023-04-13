@@ -18,7 +18,7 @@ func IsPrime(n int) (bool, error) {
 		return false, nil
 	}
 
-	if n == 2 || n == 3 {
+	if n == 2 {
 		return true, nil
 	}
 
@@ -26,7 +26,8 @@ func IsPrime(n int) (bool, error) {
 		return false, nil
 	}
 
-	for divisor := 3; divisor <= int(math.Sqrt(float64(n))); divisor += 2 {
+	max := int(math.Sqrt(float64(n)))
+	for divisor := 3; divisor <= max; divisor += 2 {
 		if n%divisor == 0 {
 			return false, nil
 		}
